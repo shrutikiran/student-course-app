@@ -4,11 +4,11 @@
   <servlet>
     <servlet-name>jersey-servlet</servlet-name>
     <servlet-class>
-            com.sun.jersey.spi.container.servlet.ServletContainer
-        </servlet-class>
+        com.sun.jersey.spi.container.servlet.ServletContainer
+    </servlet-class>
     <init-param>
       <param-name>com.sun.jersey.config.property.packages</param-name>
-      <param-value>intuit.api</param-value>
+      <param-value>app.api</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -23,7 +23,7 @@
     <description></description>
     <display-name>LoginServlet</display-name>
     <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>intuit.servlet.LoginServlet</servlet-class>
+    <servlet-class>app.servlet.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
@@ -33,7 +33,7 @@
     <description></description>
     <display-name>logout</display-name>
     <servlet-name>logout</servlet-name>
-    <servlet-class>intuit.servlet.LogoutServlet</servlet-class>
+    <servlet-class>app.servlet.LogoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>logout</servlet-name>

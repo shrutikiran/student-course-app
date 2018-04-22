@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>intuit</groupId>
+  <groupId>student-course-app</groupId>
   <artifactId>student-course</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
@@ -14,9 +14,120 @@
     </dependency>
 
     <dependency>
-    	<groupId>com.sun.jersey</groupId>
-    	<artifactId>jersey-server</artifactId>
-    	<version>1.8</version>
+    	  <groupId>com.sun.jersey</groupId>
+    	  <artifactId>jersey-server</artifactId>
+    	  <version>1.8</version>
     </dependency>
+
   </dependencies>
+
+  <build>
+  	<plugins>
+  	  <plugin>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>exec-maven-plugin</artifactId>
+		<version>1.5.0</version>
+		<executions>
+			<execution>
+				<id>delete assets</id>
+				<goals>
+					<goal>exec</goal>
+				</goals>
+				<phase>pre-clean</phase>
+				<configuration>
+					<workingDirectory>${project.basedir}/src/main/webapp</workingDirectory>
+					<executable>rm</executable>
+					<arguments>
+						<argument>-fr</argument>
+						<argument>assets</argument>
+					</arguments>
+				</configuration>
+			</execution>
+
+			<execution>
+				<id>create assets</id>
+				<goals>
+					<goal>exec</goal>
+				</goals>
+				<phase>pre-clean</phase>
+				<configuration>
+					<workingDirectory>${project.basedir}/src/main/webapp</workingDirectory>
+					<executable>mkdir</executable>
+					<arguments>
+						<argument>assets</argument>
+					</arguments>
+				</configuration>
+			</execution>
+			
+			<execution>
+				<id>npm install</id>
+				<goals>
+					<goal>exec</goal>
+				</goals>
+				<phase>pre-clean</phase>
+				<configuration>
+					<workingDirectory>${project.basedir}/src/main/react-components</workingDirectory>
+					<executable>npm</executable>
+					<arguments>
+						<argument>install</argument>
+					</arguments>
+				</configuration>
+			</execution>
+
+			<execution>
+				<id>npm run build</id>
+				<goals>
+					<goal>exec</goal>
+				</goals>
+				<phase>compile</phase>
+				<configuration>
+					<workingDirectory>${project.basedir}/src/main/react-components</workingDirectory>
+					<executable>npm</executable>
+					<arguments>
+						<argument>run</argument>
+						<argument>build</argument>
+					</arguments>
+				</configuration>
+			</execution>
+
+			<execution>
+				<id>copy js</id>
+				<goals>
+					<goal>exec</goal>
+				</goals>
+				<phase>compile</phase>
+				<configuration>
+					<workingDirectory>${project.basedir}/src/main/react-components/assets</workingDirectory>
+					<executable>cp</executable>
+					<arguments>
+						<argument>-rf</argument>
+						<argument>js</argument>
+						<argument>${project.basedir}/src/main/webapp/assets</argument>
+						</arguments>
+				</configuration>
+			</execution>
+
+			<execution>
+				<id>copy css</id>
+				<goals>
+					<goal>exec</goal>
+				</goals>
+				<phase>compile</phase>
+				<configuration>
+					<workingDirectory>${project.basedir}/src/main/react-components</workingDirectory>
+					<executable>cp</executable>
+					<arguments>
+						<argument>-rf</argument>
+						<argument>styles</argument>
+						<argument>${project.basedir}/src/main/webapp/assets</argument>
+						</arguments>
+				</configuration>
+			</execution>
+			
+		</executions>
+	  </plugin>
+
+    </plugins>
+  </build>
+
 </project>
